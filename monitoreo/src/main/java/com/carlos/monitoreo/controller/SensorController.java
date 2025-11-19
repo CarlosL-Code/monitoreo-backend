@@ -22,7 +22,7 @@ public class SensorController {
         return ResponseEntity.ok(service.registrar(data));
     }
 
-    @GetMapping("/ultimos")
+    @GetMapping("/latest")
     public ResponseEntity<List<SensorData>> ultimos() {
         return ResponseEntity.ok(service.obtenerUltimos());
     }

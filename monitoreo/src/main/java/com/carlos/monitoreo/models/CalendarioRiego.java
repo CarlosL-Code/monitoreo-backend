@@ -27,14 +27,14 @@ public class CalendarioRiego {
     private LocalDate fechaFin;
     private int frecuenciaHoras;
     private boolean activo = true;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime fechaRegistro;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate fechaRegistro;
 
 
     @PrePersist
     public void prePersist() {
         if (fechaRegistro == null) {
-            fechaRegistro = LocalDateTime.now();
+            fechaRegistro = LocalDate.now();
         }
     }
 
