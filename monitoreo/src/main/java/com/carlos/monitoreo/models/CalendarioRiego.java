@@ -27,8 +27,9 @@ public class CalendarioRiego {
     private LocalDate fechaFin;
     private int frecuenciaHoras;
     private boolean activo = true;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate fechaRegistro;
+
 
 
     @PrePersist
