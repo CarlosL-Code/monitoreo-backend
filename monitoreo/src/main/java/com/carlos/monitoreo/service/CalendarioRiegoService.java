@@ -2,10 +2,15 @@ package com.carlos.monitoreo.service;
 
 import com.carlos.monitoreo.models.CalendarioRiego;
 import com.carlos.monitoreo.repository.CalendarioRiegoRepository;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class CalendarioRiegoService {
@@ -61,5 +66,30 @@ public class CalendarioRiegoService {
 
     public void eliminar(Long id) {
         repository.deleteById(id);
+    }
+
+    public Map<String, Object> obtenerNotificacion(){
+
+        LocalDate hoy = LocalDate.now();
+        List<CalendarioRiego> calendarios = repository.findActivosParaHoy(hoy);
+
+        Map<String, Object> respuesta = new HashMap<>();
+
+        if(calendarios.isEmpty()){
+            respuesta.put("notificacion",false);
+            return respuesta;
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaFormateada = hoy.format(formatter);
+
+        CalendarioRiego riego = calendarios.get(0);
+
+        respuesta.put("notificacion",true);
+        respuesta.put("mensaje","Hoy se realizara un riego cada " + riego.getFrecuenciaHoras()+" horas.");
+        respuesta.put("tipo","info");
+        respuesta.put("fecha",fechaFormateada);
+
+        return respuesta;
     }
 }

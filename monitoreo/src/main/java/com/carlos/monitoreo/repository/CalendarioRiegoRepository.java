@@ -13,4 +13,11 @@ public interface CalendarioRiegoRepository extends JpaRepository<CalendarioRiego
     // Devuelve calendarios cuyo rango intersecta con el intervalo solicitado
     @Query("SELECT c FROM CalendarioRiego c " + "WHERE c.fechaInicio <= :fin AND c.fechaFin >= :inicio " + "ORDER BY c.fechaInicio ASC")
     List<CalendarioRiego> findByRangoFechas(@Param("inicio") LocalDate inicio, @Param("fin") LocalDate fin);
+
+    // Buscar calendarios activos
+    @Query("SELECT c FROM CalendarioRiego c "+
+            "WHERE c.activo = true "+
+            "AND c.fechaInicio <= :hoy "+
+            "AND c.fechaFin >= :hoy")
+    List<CalendarioRiego> findActivosParaHoy(@Param("hoy") LocalDate hoy);
 }

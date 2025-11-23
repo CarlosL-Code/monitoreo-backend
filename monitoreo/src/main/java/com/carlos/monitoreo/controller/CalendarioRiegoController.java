@@ -58,4 +58,9 @@ public class CalendarioRiegoController {
         service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/notificacion")
+    public ResponseEntity<?> notificacion(){
+        return ResponseEntity.ok(service.obtenerNotificacion());
+    }
 }
